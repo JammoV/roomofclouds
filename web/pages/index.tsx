@@ -1,13 +1,18 @@
+import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
+import React from "react";
+import { Post } from "../api/Types";
 import Link from 'next/link'
 import groq from 'groq'
 import client from '../client'
 
-const Index = ({posts}) => {
+const Index: React.FC<{ posts: Post[] }> = ({posts}) => {
     return (
         <div>
             <h1>Welcome to a blog!</h1>
+            <p>Now with typescript!</p>
+            <ul>
             {posts.length > 0 && posts.map(
-                ({ _id, title = '', slug = '', publishedAt = '' }) =>
+                ({ _id, title = '', slug, publishedAt = '' }) =>
                     slug && (
                         <li key={_id}>
                             <Link href="/post/[slug]" as={`/post/${slug.current}`}>
@@ -17,11 +22,16 @@ const Index = ({posts}) => {
                         </li>
                     )
             )}
+            </ul>
         </div>
     )
 }
 
-export async function getStaticProps() {
+interface ResultData {
+    posts: Post[];
+}
+
+export const getStaticProps: GetStaticProps<ResultData> = async (context) => {
     const posts = await client.fetch(groq`
       *[_type == "post" && publishedAt < now()] | order(publishedAt desc)
     `)
@@ -31,5 +41,6 @@ export async function getStaticProps() {
         }
     }
 }
+
 
 export default Index

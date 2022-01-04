@@ -1,14 +1,17 @@
 // [slug].js
+import React from "react";
 import groq from 'groq'
 import imageUrlBuilder from '@sanity/image-url'
 import BlockContent from '@sanity/block-content-to-react'
 import client from '../../client'
+import { Post } from "../../api/Types";
+import { GetStaticProps } from "next";
 
-function urlFor (source) {
+function urlFor (source: string) {
     return imageUrlBuilder(client).image(source)
 }
 
-const Post = ({post}) => {
+const Post: React.FC<{post: Post}> = ({post}) => {
     if(!post) return null
 
     const {
@@ -25,7 +28,7 @@ const Post = ({post}) => {
             {categories && (
                 <ul>
                     Posted in
-                    {categories.map(category => <li key={category}>{category}</li>)}
+                    {categories.map((category, i) => <li key={i}>{category}</li>)}
                 </ul>
             )}
             {authorImage && (
@@ -59,14 +62,18 @@ export async function getStaticPaths() {
     )
 
     return {
-        paths: paths.map((slug) => ({params: {slug}})),
+        paths: paths.map((slug: string) => ({params: {slug}})),
         fallback: true,
     }
 }
 
-export async function getStaticProps(context) {
+interface ResultData {
+    post: Post;
+}
+
+export const getStaticProps: GetStaticProps<ResultData> = async (context) => {
     // It's important to default the slug so that it doesn't return "undefined"
-    const { slug = "" } = context.params
+    const slug = context.params?.slug as string
     const post = await client.fetch(query, { slug })
     return {
         props: {
