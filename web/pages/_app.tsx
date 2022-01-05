@@ -1,7 +1,8 @@
 // import App from "next/app";
 import type { AppProps /*, AppContext */ } from 'next/app'
-import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline'
+import Container from '@mui/material/Container'
+import '../styles/global.css'
 
 
 function MyApp({ Component, pageProps }: AppProps) {

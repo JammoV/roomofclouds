@@ -17,7 +17,7 @@ const serializers = {
             props?.node.images.map((image: any, i: number) => (
                 <img key={i}
                         src={urlFor(image)
-                            .width(200)
+                            .height(300)
                             .url()}
                     />
             ))
