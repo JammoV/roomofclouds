@@ -1,4 +1,3 @@
-// [slug].js
 import React from "react";
 import groq from 'groq'
 import imageUrlBuilder from '@sanity/image-url'
@@ -6,10 +5,26 @@ import BlockContent from '@sanity/block-content-to-react'
 import client from '../../client'
 import { Post } from "../../api/Types";
 import { GetStaticProps } from "next";
+import Link from 'next/link'
 
 function urlFor (source: string) {
     return imageUrlBuilder(client).image(source)
 }
+
+const serializers = {
+    types: {
+        gallery: (props: any) => (
+            props?.node.images.map((image: any, i: number) => (
+                <img key={i}
+                        src={urlFor(image)
+                            .width(200)
+                            .url()}
+                    />
+            ))
+        ),
+    },
+  }
+
 
 const Post: React.FC<{post: Post}> = ({post}) => {
     if(!post) return null
@@ -19,38 +34,40 @@ const Post: React.FC<{post: Post}> = ({post}) => {
         name = 'Missing name',
         categories,
         authorImage,
+        mainImage,
         body = []
     } = post
+
     return (
+        <>
+        <Link href="/">Terug</Link>
         <article>
             <h1>{title}</h1>
-            <span>By {name}</span>
             {categories && (
                 <ul>
                     Posted in
                     {categories.map((category, i) => <li key={i}>{category}</li>)}
                 </ul>
             )}
-            {authorImage && (
-                <div>
-                    <img
-                        src={urlFor(authorImage)
-                            .width(50)
+            <img
+                        src={urlFor(mainImage)
+                            .width(700)
                             .url()}
                     />
-                </div>
-            )}
             <BlockContent
                 blocks={body}
+                serializers={serializers}
                 imageOptions={{ w: 320, h: 240, fit: 'max' }}
                 {...client.config()}
             />
         </article>
+        </>
     )
 }
 
 const query = groq`*[_type == "post" && slug.current == $slug][0]{
   title,
+  mainImage,
   "name": author->name,
   "categories": categories[]->title,
   "authorImage": author->image,

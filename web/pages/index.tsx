@@ -8,8 +8,6 @@ import client from '../client'
 const Index: React.FC<{ posts: Post[] }> = ({posts}) => {
     return (
         <div>
-            <h1>Welcome to a blog!</h1>
-            <p>Now with typescript!</p>
             <ul>
             {posts.length > 0 && posts.map(
                 ({ _id, title = '', slug, publishedAt = '' }) =>

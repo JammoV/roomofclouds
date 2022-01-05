@@ -7,6 +7,7 @@ export interface Post {
     publishedAt: string;
     categories: Category[];
     authorImage: string;
+    mainImage: string;
     body: string;
     name: string;
 }
