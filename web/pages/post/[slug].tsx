@@ -21,8 +21,13 @@ const serializers = {
                             .url()}
                     />
             ))
-        ),
+        )
     },
+    marks: {
+        highlight: (props: any) => (
+            <span className="highlight">{props.children.map((text: string) => text)}</span>
+        )
+    }
   }
 
 
