@@ -66,6 +66,7 @@ const Post: React.FC<{post: Post}> = ({post}) => {
                 {...client.config()}
             />
         </article>
+        <Link href="/">Terug</Link>
         </>
     )
 }
