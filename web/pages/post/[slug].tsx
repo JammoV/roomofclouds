@@ -6,6 +6,7 @@ import client from '../../client'
 import { Post } from "../../api/Types";
 import { GetStaticProps } from "next";
 import Link from 'next/link'
+import ImageGallery from "../../components/ImageGallery";
 
 function urlFor (source: string) {
     return imageUrlBuilder(client).image(source)
@@ -13,15 +14,7 @@ function urlFor (source: string) {
 
 const serializers = {
     types: {
-        gallery: (props: any) => (
-            props?.node.images.map((image: any, i: number) => (
-                <img key={i}
-                        src={urlFor(image)
-                            .height(300)
-                            .url()}
-                    />
-            ))
-        )
+        gallery: (props: any) => <ImageGallery images={props?.node.images} />
     },
     marks: {
         highlight: (props: any) => (
