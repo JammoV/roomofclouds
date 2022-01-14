@@ -6,7 +6,7 @@ import '../styles/global.css'
 
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return (<Container maxWidth='md'>
+  return (<Container maxWidth='lg'>
       <CssBaseline />
       <h1>Room of Clouds</h1>
       <Component {...pageProps} />
