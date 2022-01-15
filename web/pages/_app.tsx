@@ -3,12 +3,13 @@ import type { AppProps /*, AppContext */ } from 'next/app'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import '../styles/global.css'
+import Header from '../components/Header'
 
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return (<Container maxWidth='lg'>
+  return (<Container maxWidth='md'>
       <CssBaseline />
-      <h1>Room of Clouds</h1>
+      <Header/>
       <Component {...pageProps} />
       </Container>)
 }

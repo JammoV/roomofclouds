@@ -3,6 +3,7 @@ import { ImageList, ImageListItem, ImageListItemBar } from "@mui/material";
 import imageUrlBuilder from '@sanity/image-url'
 import client from '../client'
 import Link from 'next/link'
+import { useMediaQuery } from "@mui/material";
 
 export interface Image {
   src: string;
@@ -21,6 +22,8 @@ function urlFor (source: string) {
 
 
 const HomepageImageGallery: React.VFC<ImageGalleryProps> = ({images}) => {
+    const isMobile = useMediaQuery('(max-width:600px)');
+
     return (
         <ImageList
             sx={{
@@ -31,7 +34,7 @@ const HomepageImageGallery: React.VFC<ImageGalleryProps> = ({images}) => {
             gap={5}
     >
             {images.map((image, i) => {
-        const cols = 1; //item.featured ? 2 : 1;
+        const cols = isMobile ? 3 : 1; //item.featured ? 2 : 1;
         const rows = 1; //item.featured ? 2 : 1;
         return (
           <Link href={image.url} key={i}>
