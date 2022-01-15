@@ -11,3 +11,7 @@ img {
     background-color: rgb(174, 248, 230);
     padding: 7px 5px;
 }
+
+h1, h2, h3, h4 {
+    font-family: 'Libre Baskerville', serif;
+}
