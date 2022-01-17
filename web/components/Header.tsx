@@ -9,6 +9,7 @@ const Header: React.VFC = () => (
             fontSize: '3rem',
             fontFamily: ['Ubuntu', 'serif'].join(','),
             fontWeight: '500',
+            color: '#295357',
             marginTop: '1rem',
             marginBottom: '1rem'
         }}

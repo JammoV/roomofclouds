@@ -1,3 +1,10 @@
+/* $primary-color: #F99F61;
+$secondary-color: #539EA5;
+$tertiary-color: #A8D4D8;
+$tertiary-color-light: #EEF6F6;
+$main-white: #ffffff;
+$text-color: #444444; */
+
 body {
     padding-bottom: 50px;
     line-height: 2rem;
@@ -39,5 +46,12 @@ h4 {
 
 p, li {
     font-size: 1.2rem;
-    line-height: 2.5rem;
+    line-height: 2rem;
+}
+
+blockquote {
+    background-color: #EEF6F6;
+    border-left: solid 10px #539EA5;
+    margin: 0;
+    padding: 20px;
 }
