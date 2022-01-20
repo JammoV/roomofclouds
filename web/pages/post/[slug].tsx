@@ -1,75 +1,75 @@
-import React from "react";
-import groq from 'groq'
-import imageUrlBuilder from '@sanity/image-url'
 import BlockContent from '@sanity/block-content-to-react'
-import client from '../../client'
-import { Post } from "../../api/Types";
-import { GetStaticProps } from "next";
+import imageUrlBuilder from '@sanity/image-url'
+import groq from 'groq'
+import type { GetStaticProps } from 'next'
 import Link from 'next/link'
-import ImageGallery, { Image } from "../../components/ImageGallery";
+import React from 'react'
 
-function urlFor (source: string) {
+import { Post } from '../../api/Types'
+import client from '../../client'
+import type { Image } from '../../components/ImageGallery'
+import ImageGallery from '../../components/ImageGallery'
+
+function urlFor(source: string) {
     return imageUrlBuilder(client).image(source)
 }
 
 const mapImages = (images: string[]): Image[] => {
-    return images.map((image: string) => ({src: image}))
+    return images.map((image: string) => ({ src: image }))
 }
 
 interface GalleryProps {
     node: {
-        images: string[];
+        images: string[]
     }
 }
 
 const serializers = {
     types: {
-        gallery: (props: GalleryProps) => <ImageGallery images={mapImages(props.node.images)} imgWidth={500} imgHeight={500} />
+        gallery: (props: GalleryProps) => (
+            <ImageGallery
+                images={mapImages(props.node.images)}
+                imgWidth={500}
+                imgHeight={500}
+            />
+        ),
     },
     marks: {
         highlight: (props: any) => (
-            <span className="highlight">{props.children.map((text: string) => text)}</span>
-        )
-    }
-  }
+            <span className="highlight">
+                {props.children.map((text: string) => text)}
+            </span>
+        ),
+    },
+}
 
+const Post: React.FC<{ post: Post }> = ({ post }) => {
+    if (!post) return null
 
-const Post: React.FC<{post: Post}> = ({post}) => {
-    if(!post) return null
-
-    const {
-        title = 'Missing title',
-        name = 'Missing name',
-        categories,
-        authorImage,
-        mainImage,
-        body = []
-    } = post
+    const { title = 'Missing title', categories, mainImage, body = [] } = post
 
     return (
         <>
-        <Link href="/">Terug</Link>
-        <article>
-            <h1>{title}</h1>
-            {categories && (
-                <ul>
-                    Posted in
-                    {categories.map((category, i) => <li key={i}>{category}</li>)}
-                </ul>
-            )}
-            <img
-                        src={urlFor(mainImage)
-                            .width(700)
-                            .url()}
-                    />
-            <BlockContent
-                blocks={body}
-                serializers={serializers}
-                imageOptions={{ w: 320, h: 240, fit: 'max' }}
-                {...client.config()}
-            />
-        </article>
-        <Link href="/">Terug</Link>
+            <Link href="/">Terug</Link>
+            <article>
+                <h1>{title}</h1>
+                {categories && (
+                    <ul>
+                        Posted in
+                        {categories.map((category, i) => (
+                            <li key={i}>{category}</li>
+                        ))}
+                    </ul>
+                )}
+                <img src={urlFor(mainImage).width(700).url()} alt={title} />
+                <BlockContent
+                    blocks={body}
+                    serializers={serializers}
+                    imageOptions={{ w: 320, h: 240, fit: 'max' }}
+                    {...client.config()}
+                />
+            </article>
+            <Link href="/">Terug</Link>
         </>
     )
 }
@@ -88,13 +88,13 @@ export async function getStaticPaths() {
     )
 
     return {
-        paths: paths.map((slug: string) => ({params: {slug}})),
+        paths: paths.map((slug: string) => ({ params: { slug } })),
         fallback: true,
     }
 }
 
 interface ResultData {
-    post: Post;
+    post: Post
 }
 
 export const getStaticProps: GetStaticProps<ResultData> = async (context) => {
@@ -103,8 +103,8 @@ export const getStaticProps: GetStaticProps<ResultData> = async (context) => {
     const post = await client.fetch(query, { slug })
     return {
         props: {
-            post
-        }
+            post,
+        },
     }
 }
 export default Post

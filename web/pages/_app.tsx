@@ -1,17 +1,19 @@
 // import App from "next/app";
-import type { AppProps /*, AppContext */ } from 'next/app'
-import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
+import CssBaseline from '@mui/material/CssBaseline'
+import type { AppProps /*, AppContext */ } from 'next/app'
+
 import '../styles/global.css'
 import Header from '../components/Header'
 
-
 function MyApp({ Component, pageProps }: AppProps) {
-  return (<Container maxWidth='md'>
-      <CssBaseline />
-      <Header/>
-      <Component {...pageProps} />
-      </Container>)
+    return (
+        <Container maxWidth="md">
+            <CssBaseline />
+            <Header />
+            <Component {...pageProps} />
+        </Container>
+    )
 }
 
 // Only uncomment this method if you have blocking data requirements for

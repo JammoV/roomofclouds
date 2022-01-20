@@ -1,27 +1,21 @@
-import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
-import React from "react";
-import { Post } from "../api/Types";
-import imageUrlBuilder from '@sanity/image-url'
-import Link from 'next/link'
 import groq from 'groq'
+import type { GetStaticProps } from 'next'
+import React from 'react'
+
+import type { Post } from '../api/Types'
 import client from '../client'
-import HomepageImageGallery from '../components/HomepageImageGallery';
-
-function urlFor (source: string) {
-    return imageUrlBuilder(client).image(source)
-}
-
+import HomepageImageGallery from '../components/HomepageImageGallery'
 
 const mapGalleryData = (posts: Post[]) => {
     return posts.map((post: Post) => ({
         src: post.mainImage,
         title: post.title,
         subtitle: new Date(post.publishedAt).toDateString(),
-        url: `/post/${post.slug.current}`
-    }));
+        url: `/post/${post.slug.current}`,
+    }))
 }
 
-const Index: React.FC<{ posts: Post[] }> = ({posts}) => {
+const Index: React.FC<{ posts: Post[] }> = ({ posts }) => {
     return (
         <div>
             {/* <ul>
@@ -43,19 +37,18 @@ const Index: React.FC<{ posts: Post[] }> = ({posts}) => {
 }
 
 interface ResultData {
-    posts: Post[];
+    posts: Post[]
 }
 
-export const getStaticProps: GetStaticProps<ResultData> = async (context) => {
+export const getStaticProps: GetStaticProps<ResultData> = async () => {
     const posts = await client.fetch(groq`
       *[_type == "post" && publishedAt < now()] | order(publishedAt desc)
     `)
     return {
         props: {
-            posts
-        }
+            posts,
+        },
     }
 }
-
 
 export default Index

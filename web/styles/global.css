@@ -6,7 +6,9 @@ $main-white: #ffffff;
 $text-color: #444444; */
 
 body {
-    padding-bottom: 50px;
+    background: url(../images/footer.png) repeat-x center bottom;
+    background-size: 50%;
+    padding-bottom: 250px;
     line-height: 2rem;
 }
 
@@ -42,6 +44,7 @@ h3 {
 h4 {
     font-size: 2rem;
     line-height: 2.2rem;
+    margin-bottom: 20px;
 }
 
 p, li {
