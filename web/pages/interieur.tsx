@@ -5,7 +5,7 @@ import CenteredHeader from '../components/CenteredHeader'
 
 const Interieur: React.VFC = () => {
     return (
-        <Box sx={{ minHeight: '50vh' }}>
+        <Box sx={{ minHeight: '50vh', mt: 8 }}>
             <CenteredHeader title="Interieurportfolio" />
             <Typography sx={{ textAlign: 'center' }}>
                 Binnenkort beschikbaar!

@@ -10,7 +10,7 @@ import PostHero from '../components/PostHero'
 
 const Posts: React.FC<{ posts: Post[] }> = ({ posts }) => {
     return (
-        <Container maxWidth="md">
+        <Container maxWidth="md" sx={{ mt: 8 }}>
             <CenteredHeader title="Alle reis artikelen" />
             {posts.map((post, i) => (
                 <PostHero post={post} key={i} />

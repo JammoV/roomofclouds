@@ -10,7 +10,7 @@ import HomepageRecentPosts from '../components/HomepageRecentPosts'
 
 const Index: React.FC<{ posts: Post[] }> = ({ posts }) => {
     return (
-        <Container maxWidth="md">
+        <Container maxWidth="md" sx={{ mt: 8 }}>
             <CenteredHeader title="Recente reis artikelen" />
             <HomepageRecentPosts posts={posts} />
         </Container>
