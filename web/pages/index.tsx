@@ -1,3 +1,4 @@
+import { Container } from '@mui/material'
 import groq from 'groq'
 import type { GetStaticProps } from 'next'
 import React from 'react'
@@ -6,11 +7,10 @@ import type { Post } from '../api/Types'
 import client from '../client'
 import CenteredHeader from '../components/CenteredHeader'
 import HomepageRecentPosts from '../components/HomepageRecentPosts'
-import { Container } from '@mui/material'
 
 const Index: React.FC<{ posts: Post[] }> = ({ posts }) => {
     return (
-        <Container maxWidth='md'>
+        <Container maxWidth="md">
             <CenteredHeader title="Recente reis artikelen" />
             <HomepageRecentPosts posts={posts} />
         </Container>
