@@ -1,18 +1,25 @@
-// import App from "next/app";
 import Container from '@mui/material/Container'
 import CssBaseline from '@mui/material/CssBaseline'
-import type { AppProps /*, AppContext */ } from 'next/app'
+import { ThemeProvider } from '@mui/material/styles'
+import type { AppProps } from 'next/app'
 
-import '../styles/global.css'
 import Header from '../components/Header'
+import Navigation from '../components/Navigation'
+import theme from '../styles/theme'
+import '../styles/global.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
-        <Container maxWidth="md">
+        <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Header />
-            <Component {...pageProps} />
-        </Container>
+            <Container maxWidth="md">
+                <Header />
+            </Container>
+            <Navigation />
+            <Container maxWidth="md">
+                <Component {...pageProps} />
+            </Container>
+        </ThemeProvider>
     )
 }
 

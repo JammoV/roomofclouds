@@ -50,7 +50,6 @@ const Post: React.FC<{ post: Post }> = ({ post }) => {
 
     return (
         <>
-            <Link href="/">Terug</Link>
             <article>
                 <h1>{title}</h1>
                 {categories && (

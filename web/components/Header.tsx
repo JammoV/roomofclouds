@@ -1,21 +1,34 @@
-import { Typography } from '@mui/material'
+import { Box } from '@mui/material'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 
-const Header: React.VFC = () => (
-    <Typography
-        align="center"
-        variant="body1"
-        sx={{
-            fontSize: '3rem',
-            fontFamily: ['Ubuntu', 'serif'].join(','),
-            fontWeight: '500',
-            color: '#295357',
-            marginTop: '1rem',
-            marginBottom: '1rem',
-        }}
-    >
-        Room of Clouds
-    </Typography>
-)
+import HomepageHeaderBlock from './HomepageHeaderBlock'
+
+const Header: React.VFC = () => {
+    const router = useRouter()
+
+    if (router.pathname === '/') {
+        return <HomepageHeaderBlock />
+    }
+
+    return (
+        <Box
+            textAlign="center"
+            sx={{
+                'img:hover': {
+                    cursor: 'pointer',
+                },
+            }}
+        >
+            <Link href="/">
+                <Box>
+                    <Image src="/images/logo.png" width={225} height={169} />
+                </Box>
+            </Link>
+        </Box>
+    )
+}
 
 export default Header

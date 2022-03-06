@@ -6,7 +6,7 @@ $main-white: #ffffff;
 $text-color: #444444; */
 
 body {
-    background: url(../images/footer.png) repeat-x center bottom;
+    background: url(../public/images/footer.png) repeat-x center bottom;
     background-size: 50%;
     padding-bottom: 250px;
     line-height: 2rem;
@@ -22,8 +22,8 @@ img {
 }
 
 h1, h2, h3, h4 {
-    font-family: 'Ubuntu', serif;
-    font-weight: 500;
+    font-family: 'Yuji Syuku', serif;
+    font-weight: 400;
 }
 
 h1 {
