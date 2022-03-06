@@ -16,9 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <Header />
             </Container>
             <Navigation />
-            <Container maxWidth="md">
-                <Component {...pageProps} />
-            </Container>
+            <Component {...pageProps} />
         </ThemeProvider>
     )
 }

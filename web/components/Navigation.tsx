@@ -19,7 +19,7 @@ const Navigation: React.VFC = () => (
             backgroundColor: '#539EA5',
             pt: 1,
             pb: 1.5,
-            mb: 3,
+            mb: 0,
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',

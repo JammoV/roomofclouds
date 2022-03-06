@@ -6,15 +6,16 @@ import type { Post } from '../api/Types'
 import client from '../client'
 import CenteredHeader from '../components/CenteredHeader'
 import PostHero from '../components/PostHero'
+import { Container } from '@mui/material'
 
 const Posts: React.FC<{ posts: Post[] }> = ({ posts }) => {
     return (
-        <>
+        <Container maxWidth='md'>
             <CenteredHeader title="Alle reis artikelen" />
             {posts.map((post, i) => (
                 <PostHero post={post} key={i} />
             ))}
-        </>
+        </Container>
     )
 }
 
