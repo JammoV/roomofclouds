@@ -16,5 +16,18 @@ export default createTheme({
             fontFamily: ['Roboto', 'serif'].join(','),
             wordBreak: 'break-word',
         },
+        h4: {
+            fontSize: '1.8rem',
+            fontFamily: ['Roboto', 'serif'].join(','),
+            wordBreak: 'break-word',
+        },
+    },
+    palette: {
+        primary: {
+            main: '#539EA5',
+        },
+        secondary: {
+            main: '#EEF6F6',
+        },
     },
 })

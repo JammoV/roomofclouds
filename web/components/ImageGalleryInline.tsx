@@ -20,14 +20,11 @@ function urlFor(source: string) {
     return imageUrlBuilder(client).image(source)
 }
 
-const ImageGallery: React.VFC<ImageGalleryProps> = ({
+const ImageGalleryInline: React.VFC<ImageGalleryProps> = ({
     images,
     imgWidth,
     imgHeight,
 }) => {
-    const imageCount = images.length
-    const unevenImageCounts = [3, 5]
-
     return (
         <ImageList
             sx={{
@@ -38,19 +35,14 @@ const ImageGallery: React.VFC<ImageGalleryProps> = ({
             gap={5}
         >
             {images.map((image, i) => {
-                const cols =
-                    (unevenImageCounts.includes(imageCount) &&
-                        unevenImageCounts.includes(i + 1)) ||
-                    imageCount === 1
-                        ? 2
-                        : 1
-                const rows = 1
+                const cols = 1
+                const rows = images.length
                 return (
                     <ImageListItem key={i} cols={cols} rows={rows}>
                         <img
                             src={urlFor(image.src)
-                                .width(imgWidth * cols)
-                                .height(imgHeight * rows)
+                                .width(imgWidth)
+                                .height(imgHeight)
                                 .quality(100)
                                 .url()}
                             alt={''}
@@ -69,4 +61,4 @@ const ImageGallery: React.VFC<ImageGalleryProps> = ({
     )
 }
 
-export default ImageGallery
+export default ImageGalleryInline

@@ -80,9 +80,7 @@ const PostHero: React.VFC<PostHeroProps> = ({ post }) => (
             </Box>
             <Box
                 sx={{
-                    pt: 3,
-                    pl: 3,
-                    pb: 3,
+                    p: 3,
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',

@@ -1,15 +1,18 @@
-import { Box, Container } from '@mui/material'
+import { Box, Button, Container } from '@mui/material'
 import BlockContent from '@sanity/block-content-to-react'
 import imageUrlBuilder from '@sanity/image-url'
 import groq from 'groq'
 import type { GetStaticProps } from 'next'
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 import { Post } from '../../api/Types'
 import client from '../../client'
 import type { Image } from '../../components/ImageGallery'
 import ImageGallery from '../../components/ImageGallery'
+import ImageGalleryInline from '../../components/ImageGalleryInline'
+import ImageGalleryStacked from '../../components/ImageGalleryStacked'
+import Tip from '../../components/Tip'
 
 function urlFor(source: string) {
     return imageUrlBuilder(client).image(source)
@@ -22,17 +25,43 @@ const mapImages = (images: string[]): Image[] => {
 interface GalleryProps {
     node: {
         images: string[]
+        display?: string
     }
 }
 
 const serializers = {
     types: {
-        gallery: (props: GalleryProps) => (
-            <ImageGallery
-                images={mapImages(props.node.images)}
-                imgWidth={500}
-                imgHeight={500}
-            />
+        gallery: (props: GalleryProps) => {
+            if (props.node.display === 'inline') {
+                return (
+                    <ImageGalleryInline
+                        images={mapImages(props.node.images)}
+                        imgWidth={500}
+                        imgHeight={600}
+                    />
+                )
+            }
+
+            if (props.node.display === 'stacked') {
+                return (
+                    <ImageGalleryStacked
+                        images={mapImages(props.node.images)}
+                        imgWidth={852}
+                        imgHeight={400}
+                    />
+                )
+            }
+
+            return (
+                <ImageGallery
+                    images={mapImages(props.node.images)}
+                    imgWidth={500}
+                    imgHeight={500}
+                />
+            )
+        },
+        tip: (props: any) => (
+            <Tip type={props.node.type} text={props.node.text} />
         ),
         image: (props: any) => (
             <img src={urlFor(props.node).width(852).url()} alt="" />
@@ -48,6 +77,7 @@ const serializers = {
 }
 
 const Post: React.FC<{ post: Post }> = ({ post }) => {
+    const router = useRouter()
     if (!post) return null
 
     const { title = 'Missing title', mainImage, body = [] } = post
@@ -69,7 +99,13 @@ const Post: React.FC<{ post: Post }> = ({ post }) => {
                         imageOptions={{ w: 320, h: 240, fit: 'max' }}
                         {...client.config()}
                     />
-                    <Link href="/">Terug</Link>
+                    <Button
+                        variant="text"
+                        onClick={() => router.back()}
+                        sx={{ mt: 4 }}
+                    >
+                        Terug
+                    </Button>
                 </Container>
             </article>
         </>
