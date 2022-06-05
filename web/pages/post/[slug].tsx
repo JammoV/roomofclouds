@@ -55,8 +55,12 @@ const portableComponents: PortableTextComponents = {
         bullet: ({ children }) => <ul className="my-4">{children}</ul>,
     },
     listItem: {
-        number: ({ children }) => <li className="list-decimal pl-2 ml-8 text-lg">{children}</li>,
-        bullet: ({ children }) => <li className="list-disc pl-2 ml-8 text-lg">{children}</li>,
+        number: ({ children }) => (
+            <li className="list-decimal pl-2 ml-8 text-lg">{children}</li>
+        ),
+        bullet: ({ children }) => (
+            <li className="list-disc pl-2 ml-8 text-lg">{children}</li>
+        ),
     },
     marks: {
         highlight: ({ children }) => (
