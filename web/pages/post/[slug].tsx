@@ -1,115 +1,66 @@
-import { Box, Button, Container } from '@mui/material'
-import BlockContent from '@sanity/block-content-to-react'
+import type {
+    PortableTextComponents,
+    PortableTextTypeComponentProps,
+} from '@portabletext/react'
+import { PortableText } from '@portabletext/react'
 import imageUrlBuilder from '@sanity/image-url'
+import type { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder'
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
 import groq from 'groq'
-import type { GetStaticProps } from 'next'
+import type { GetStaticProps, GetStaticPaths } from 'next'
 import { useRouter } from 'next/router'
-import React from 'react'
+import type { FC } from 'react'
 
-import { Post } from '../../api/Types'
+import { Post } from '@/api/Types'
+import BlockQuote from '@/atoms/BlockQuote'
+import Header, { HeaderType } from '@/atoms/Header'
+import type { TipProps } from '@/atoms/Tip'
+import Tip from '@/atoms/Tip'
+import Gallery from '@/organisms/Gallery'
+import GenericTemplate from '@/templates/Generic'
+import Head from 'next/head'
+
 import client from '../../client'
-import type { Image } from '../../components/ImageGallery'
-import ImageGallery from '../../components/ImageGallery'
-import ImageGalleryInline from '../../components/ImageGalleryInline'
-import ImageGalleryStacked from '../../components/ImageGalleryStacked'
-import Tip from '../../components/Tip'
 
-function urlFor(source: string) {
+const urlFor = (source: string): ImageUrlBuilder => {
     return imageUrlBuilder(client).image(source)
 }
 
-const mapImages = (images: string[]): Image[] => {
-    return images.map((image: string) => ({ src: image }))
-}
-
 interface GalleryProps {
-    node: {
-        images: string[]
+    value: {
+        images: SanityImageSource[]
         display?: string
     }
 }
 
-const serializers = {
+const portableComponents: PortableTextComponents = {
     types: {
-        gallery: (props: GalleryProps) => {
-            if (props.node.display === 'inline') {
-                return (
-                    <ImageGalleryInline
-                        images={mapImages(props.node.images)}
-                        imgWidth={500}
-                        imgHeight={600}
-                    />
-                )
-            }
-
-            if (props.node.display === 'stacked') {
-                return (
-                    <ImageGalleryStacked
-                        images={mapImages(props.node.images)}
-                        imgWidth={852}
-                        imgHeight={400}
-                    />
-                )
-            }
-
+        gallery: (props: GalleryProps): JSX.Element => {
             return (
-                <ImageGallery
-                    images={mapImages(props.node.images)}
-                    imgWidth={500}
-                    imgHeight={500}
+                <Gallery
+                    images={props.value.images}
+                    display={props.value.display}
                 />
             )
         },
-        tip: (props: any) => (
-            <Tip type={props.node.type} text={props.node.text} />
+        tip: ({ value }: PortableTextTypeComponentProps<TipProps>) => (
+            <Tip type={value.type} text={value.text} />
         ),
-        image: (props: any) => (
-            <img src={urlFor(props.node).width(852).url()} alt="" />
+        image: ({ value }: { value: string }) => (
+            <img src={urlFor(value).width(852).url()} alt="" />
         ),
     },
     marks: {
-        highlight: (props: any) => (
-            <span className="highlight">
-                {props.children.map((text: string) => text)}
-            </span>
+        highlight: ({ children }) => (
+            <span className="highlight">{children}</span>
         ),
     },
-}
-
-const Post: React.FC<{ post: Post }> = ({ post }) => {
-    const router = useRouter()
-    if (!post) return null
-
-    const { title = 'Missing title', mainImage, body = [] } = post
-
-    return (
-        <>
-            <article>
-                <Box sx={{ maxWidth: '2400px' }}>
-                    <img
-                        src={urlFor(mainImage).width(2400).height(800).url()}
-                        alt={title}
-                    />
-                </Box>
-                <Container maxWidth="md">
-                    <h1>{title}</h1>
-                    <BlockContent
-                        blocks={body}
-                        serializers={serializers}
-                        imageOptions={{ w: 320, h: 240, fit: 'max' }}
-                        {...client.config()}
-                    />
-                    <Button
-                        variant="text"
-                        onClick={() => router.back()}
-                        sx={{ mt: 4 }}
-                    >
-                        Terug
-                    </Button>
-                </Container>
-            </article>
-        </>
-    )
+    block: {
+        h2: ({ children }) => <Header type={HeaderType.H2}>{children}</Header>,
+        h3: ({ children }) => <Header type={HeaderType.H3}>{children}</Header>,
+        h4: ({ children }) => <Header type={HeaderType.H4}>{children}</Header>,
+        blockquote: ({ children }) => <BlockQuote>{children}</BlockQuote>,
+    },
 }
 
 const query = groq`*[_type == "post" && slug.current == $slug][0]{
@@ -120,8 +71,40 @@ const query = groq`*[_type == "post" && slug.current == $slug][0]{
   "authorImage": author->image,
   body
 }`
-export async function getStaticPaths() {
-    const paths = await client.fetch(
+
+const Post: FC<{ post: Post }> = ({ post }) => {
+    const router = useRouter()
+    if (!post) return null
+
+    const { title = 'Missing title', mainImage, body = [] } = post
+
+    return (
+        <GenericTemplate mainImage={mainImage} mainImageTitle={title}>
+            <Head>
+                <title>{`Room of Clouds - ${title}`}</title>
+            </Head>
+            <article>
+                <div>
+                    <h1 className="font-yuji text-4xl mt-12 mb-8">{title}</h1>
+                    <PortableText
+                        value={body}
+                        components={portableComponents}
+                        // imageOptions={{ w: 320, h: 240, fit: 'max' }}
+                        // {...client.config()}
+                    />
+                    <button
+                        onClick={(): void => router.back()}
+                        className={`mt-4`}
+                    >
+                        Terug
+                    </button>
+                </div>
+            </article>
+        </GenericTemplate>
+    )
+}
+export const getStaticPaths: GetStaticPaths = async () => {
+    const paths: string[] = await client.fetch(
         groq`*[_type == "post" && defined(slug.current)][].slug.current`
     )
 
@@ -138,7 +121,7 @@ interface ResultData {
 export const getStaticProps: GetStaticProps<ResultData> = async (context) => {
     // It's important to default the slug so that it doesn't return "undefined"
     const slug = context.params?.slug as string
-    const post = await client.fetch(query, { slug })
+    const post: Post = await client.fetch(query, { slug })
     return {
         props: {
             post,

@@ -1,19 +1,27 @@
-import { Container } from '@mui/material'
 import groq from 'groq'
 import type { GetStaticProps } from 'next'
+import Head from 'next/head'
 import React from 'react'
 
-import type { Post } from '../api/Types'
+import type { Post } from '@/api/Types'
+import CenteredHeader from '@/atoms/CenteredHeader'
+import HomepageRecentPosts from '@/molecules/HomepageRecentPosts'
+import GenericTemplate from '@/templates/Generic'
+
 import client from '../client'
-import CenteredHeader from '../components/CenteredHeader'
-import HomepageRecentPosts from '../components/HomepageRecentPosts'
 
 const Index: React.FC<{ posts: Post[] }> = ({ posts }) => {
     return (
-        <Container maxWidth="md" sx={{ mt: 8 }}>
-            <CenteredHeader title="Recente reis artikelen" />
+        <GenericTemplate>
+            <Head>
+                <title>{`Room of Clouds`}</title>
+            </Head>
+            <div className="mt-12 mb-8">
+                <CenteredHeader title="Recente reis artikelen" />
+            </div>
+
             <HomepageRecentPosts posts={posts} />
-        </Container>
+        </GenericTemplate>
     )
 }
 
@@ -22,7 +30,7 @@ interface ResultData {
 }
 
 export const getStaticProps: GetStaticProps<ResultData> = async () => {
-    const posts = await client.fetch(groq`
+    const posts: Post[] = await client.fetch(groq`
       *[_type == "post" && publishedAt < now()] | order(publishedAt desc)[0...5]
     `)
     return {

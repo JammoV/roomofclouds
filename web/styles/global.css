@@ -1,68 +1,33 @@
-/* $primary-color: #F99F61;
-$secondary-color: #539EA5;
-$tertiary-color: #A8D4D8;
-$tertiary-color-light: #EEF6F6;
-$main-white: #ffffff;
-$text-color: #444444; */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
 
 body {
     background: url(../public/images/footer.png) repeat-x center bottom;
     background-size: 50%;
+    font-family: 'Roboto', sans-serif;
     padding-bottom: 250px;
-    line-height: 2rem;
     letter-spacing: normal;
-}
-
-img {
-    max-width: 100%;;
-}
-
-.highlight {
-    background-color: rgb(174, 248, 230);
-    padding: 7px 5px;
-}
-
-h1, h2, h3, h4 {
-    font-family: 'Yuji Syuku', serif;
-    font-weight: 400;
-    word-break: break-word;
-}
-
-h1 {
-    font-size: 2.5rem;
-    line-height: 3rem;
-}
-
-h2 {
-    font-size: 2.3rem;
-    line-height: 2.5rem;
-}
-
-h3 {
-    font-size: 2.1rem;
-    line-height: 2.3rem;
-}
-
-h4 {
-    font-size: 1.3rem;
-    line-height: 2.2rem;
-    margin-bottom: 5px;
-    font-weight: 500;
-    font-family: 'Roboto', serif;
+    min-height: 100vh;
 }
 
 p {
-    margin-top: 0;
-}
-
-p, li {
     font-size: 1.2rem;
     line-height: 2rem;
+    margin-bottom: 1rem;
 }
 
-blockquote {
-    background-color: #EEF6F6;
-    border-left: solid 10px #539EA5;
-    margin: 0 0 20px 0;
-    padding: 20px;
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+* {
+    box-sizing: border-box;
 }

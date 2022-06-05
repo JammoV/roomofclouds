@@ -1,16 +1,14 @@
-import { Box, Typography } from '@mui/material'
-import React from 'react'
+import type { FC } from 'react'
 
-import CenteredHeader from '../components/CenteredHeader'
+import CenteredHeader from '@/atoms/CenteredHeader'
+import GenericTemplate from '@/templates/Generic'
 
-const Interieur: React.VFC = () => {
+const Interieur: FC = () => {
     return (
-        <Box sx={{ minHeight: '50vh', mt: 8 }}>
+        <GenericTemplate>
             <CenteredHeader title="Interieurportfolio" />
-            <Typography sx={{ textAlign: 'center' }}>
-                Binnenkort beschikbaar!
-            </Typography>
-        </Box>
+            <div className="text-center">Binnenkort beschikbaar!</div>
+        </GenericTemplate>
     )
 }
 
