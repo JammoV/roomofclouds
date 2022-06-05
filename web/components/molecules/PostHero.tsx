@@ -1,7 +1,7 @@
 import imageUrlBuilder from '@sanity/image-url'
 import type { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder'
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
 import type { FC } from 'react'
 
 import type { Post, PortableText } from '@/api/Types'
@@ -56,10 +56,13 @@ const PostHero: FC<PostHeroProps> = ({ post }) => (
                     height={342}
                     layout="responsive"
                     loading="lazy"
+                    alt={post.title}
                 />
             </div>
             <div className="flex flex-col justify-center py-4 md:p-8">
-                <h3 className="text-2xl font-roboto font-medium mb-1 md:mb-4">{post.title}</h3>
+                <h3 className="text-2xl font-roboto font-medium mb-1 md:mb-4">
+                    {post.title}
+                </h3>
                 <p className="mb-2">{getPostDescription(post.body)}</p>
             </div>
         </div>

@@ -9,6 +9,7 @@ const HomepageHeaderBlock: FC = () => (
                 width={424}
                 height={476}
                 layout="responsive"
+                alt="Room of Clouds"
             />
         </div>
 

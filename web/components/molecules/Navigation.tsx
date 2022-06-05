@@ -19,7 +19,9 @@ const Navigation: FC = () => (
         {menuItems.map((item) => (
             <div key={item.i} className="py-4 px-4 font-yuji">
                 <Link href={item.path}>
-                    <a className="text-white text-lg hover:underline">{item.label}</a>
+                    <a className="text-white text-lg hover:underline">
+                        {item.label}
+                    </a>
                 </Link>
             </div>
         ))}

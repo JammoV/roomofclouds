@@ -8,6 +8,7 @@ import type { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder'
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
 import groq from 'groq'
 import type { GetStaticProps, GetStaticPaths } from 'next'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import type { FC } from 'react'
 
@@ -18,7 +19,6 @@ import type { TipProps } from '@/atoms/Tip'
 import Tip from '@/atoms/Tip'
 import Gallery from '@/organisms/Gallery'
 import GenericTemplate from '@/templates/Generic'
-import Head from 'next/head'
 
 import client from '../../client'
 
