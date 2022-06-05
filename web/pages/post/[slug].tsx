@@ -50,6 +50,14 @@ const portableComponents: PortableTextComponents = {
             <img src={urlFor(value).width(852).url()} alt="" />
         ),
     },
+    list: {
+        number: ({ children }) => <ol className="my-4">{children}</ol>,
+        bullet: ({ children }) => <ul className="my-4">{children}</ul>,
+    },
+    listItem: {
+        number: ({ children }) => <li className="list-decimal pl-2 ml-8 text-lg">{children}</li>,
+        bullet: ({ children }) => <li className="list-disc pl-2 ml-8 text-lg">{children}</li>,
+    },
     marks: {
         highlight: ({ children }) => (
             <span className="highlight">{children}</span>

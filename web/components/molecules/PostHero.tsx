@@ -63,7 +63,7 @@ const PostHero: FC<PostHeroProps> = ({ post }) => (
                 <h3 className="text-2xl font-roboto font-medium mb-1 md:mb-4">
                     {post.title}
                 </h3>
-                <p className="mb-2">{getPostDescription(post.body)}</p>
+                <p>{getPostDescription(post.body)}</p>
             </div>
         </div>
     </Link>
