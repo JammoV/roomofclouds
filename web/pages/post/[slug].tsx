@@ -49,6 +49,7 @@ const portableComponents: PortableTextComponents = {
         image: ({ value }: { value: string }) => (
             <img src={urlFor(value).width(852).url()} alt="" />
         ),
+        line: () => <hr className="my-2 border-green-primary" />,
     },
     list: {
         number: ({ children }) => <ol className="my-4">{children}</ol>,
