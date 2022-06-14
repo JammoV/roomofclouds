@@ -31,7 +31,7 @@ interface ResultData {
 
 export const getStaticProps: GetStaticProps<ResultData> = async () => {
     const posts: Post[] = await client.fetch(groq`
-      *[_type == "post" && publishedAt < now()] | order(publishedAt desc)[0...5]
+      *[_type == "post" && publishedAt < now() && categories[0]->title != "Interieur"] | order(publishedAt desc)[0...5]
     `)
     return {
         props: {

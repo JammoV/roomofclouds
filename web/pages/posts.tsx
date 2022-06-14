@@ -16,7 +16,9 @@ const Posts: React.FC<{ posts: Post[] }> = ({ posts }) => {
             <Head>
                 <title>Room of Clouds - Alle reis artikelen</title>
             </Head>
-            <CenteredHeader title="Alle reis artikelen" />
+            <div className="my-8">
+                <CenteredHeader title="Alle reis artikelen" />
+            </div>
             {posts.map((post) => (
                 <PostHero post={post} key={post._id} />
             ))}
@@ -30,7 +32,7 @@ interface ResultData {
 
 export const getStaticProps: GetStaticProps<ResultData> = async () => {
     const posts: Post[] = await client.fetch(groq`
-      *[_type == "post" && publishedAt < now()] | order(publishedAt desc)
+      *[_type == "post" && publishedAt < now() && categories[0]->title != "Interieur"] | order(publishedAt desc)
     `)
     return {
         props: {
