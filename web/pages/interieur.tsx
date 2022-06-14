@@ -13,10 +13,10 @@ import portableComponents from '../lib/PortableComponents'
 const Interieur: FC<{ post: Post }> = ({ post }) => {
     if (!post) return null
 
-    const { title = 'Missing title', mainImage, body = [] } = post
+    const { title = 'Missing title', body = [] } = post
 
     return (
-        <GenericTemplate mainImage={mainImage} mainImageTitle={title}>
+        <GenericTemplate>
             <Head>
                 <title>{`Room of Clouds - ${title}`}</title>
             </Head>
