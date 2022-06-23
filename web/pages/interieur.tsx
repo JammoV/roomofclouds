@@ -16,13 +16,15 @@ const Interieur: FC<{ post: Post }> = ({ post }) => {
     const { title = 'Missing title', body = [] } = post
 
     return (
-        <GenericTemplate>
+        <GenericTemplate containerWidth="lg">
             <Head>
                 <title>{`Room of Clouds - ${title}`}</title>
             </Head>
             <article>
                 <div>
-                    <h1 className="font-yuji text-4xl mt-12 mb-8">{title}</h1>
+                    <h1 className="font-yuji text-3xl sm:text-5xl mt-12 mb-8">
+                        {title}
+                    </h1>
                     <PortableText
                         value={body}
                         components={portableComponents}

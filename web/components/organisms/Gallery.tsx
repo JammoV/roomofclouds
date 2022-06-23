@@ -1,8 +1,10 @@
 import imageUrlBuilder from '@sanity/image-url'
 import type { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder'
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
+import type { SanityAsset } from '@sanity/image-url/lib/types/types'
 import Image from 'next/image'
 import type { FC } from 'react'
+
+import InteriorGallery from '@/organisms/InteriorGallery'
 
 import client from '../../client'
 
@@ -53,12 +55,22 @@ const getGalleryClass = (display: GalleryDisplay): string => {
         case GalleryDisplay.INLINE:
             return 'flex flex-row'
         case GalleryDisplay.STACKED:
+        default:
             return 'flex flex-col'
     }
 }
 
+export type GalleryImage = string | SanityAssetExtended
+
+export interface SanityAssetExtended extends SanityAsset {
+    title: string
+    alt: string
+}
+
 interface GalleryProps {
-    images: SanityImageSource[]
+    title: string
+    description: string
+    images: SanityAssetExtended[]
     display?: string
 }
 
@@ -66,9 +78,10 @@ export enum GalleryDisplay {
     DEFAULT = '',
     INLINE = 'inline',
     STACKED = 'stacked',
+    INTERIOR = 'interior',
 }
 
-const Gallery: FC<GalleryProps> = ({ images, display }) => {
+const Gallery: FC<GalleryProps> = ({ title, description, images, display }) => {
     const imagesLength = images.length
 
     if (display === GalleryDisplay.INLINE && images.length < 5) {
@@ -85,6 +98,7 @@ const Gallery: FC<GalleryProps> = ({ images, display }) => {
                             width={imageWidth}
                             height={imageHeight}
                             quality={100}
+                            // @ts-ignore
                             src={urlFor(image as string)
                                 .width(imageWidth)
                                 .height(imageHeight)
@@ -110,6 +124,7 @@ const Gallery: FC<GalleryProps> = ({ images, display }) => {
                             width={imageWidth}
                             height={imageHeight}
                             quality={100}
+                            // @ts-ignore
                             src={urlFor(image as string)
                                 .width(imageWidth)
                                 .height(imageHeight)
@@ -119,6 +134,16 @@ const Gallery: FC<GalleryProps> = ({ images, display }) => {
                     </div>
                 ))}
             </div>
+        )
+    }
+
+    if (display === GalleryDisplay.INTERIOR) {
+        return (
+            <InteriorGallery
+                images={images}
+                title={title}
+                description={description}
+            />
         )
     }
 
@@ -136,6 +161,7 @@ const Gallery: FC<GalleryProps> = ({ images, display }) => {
                             width={imageWidth}
                             height={imageHeight}
                             quality={100}
+                            // @ts-ignore
                             src={urlFor(image as string)
                                 .width(imageWidth)
                                 .height(imageHeight)

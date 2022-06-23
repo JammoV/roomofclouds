@@ -12,6 +12,7 @@ interface LayoutGenericProps {
     children: ReactNode
     mainImage?: string
     mainImageTitle?: string
+    containerWidth?: 'md' | 'lg'
 }
 
 const urlFor = (source: string): ImageUrlBuilder => {
@@ -22,6 +23,7 @@ const GenericTemplate: FC<LayoutGenericProps> = ({
     children,
     mainImage,
     mainImageTitle,
+    containerWidth = 'md',
 }) => (
     <>
         <Header />
@@ -34,7 +36,7 @@ const GenericTemplate: FC<LayoutGenericProps> = ({
                 />
             </div>
         )}
-        <Container>{children}</Container>
+        <Container containerWidth={containerWidth}>{children}</Container>
     </>
 )
 

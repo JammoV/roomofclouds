@@ -18,6 +18,8 @@ interface GalleryProps {
     value: {
         images: SanityImageSource[]
         display?: string
+        title?: string
+        description?: string
     }
 }
 
@@ -30,8 +32,11 @@ const portableComponents: PortableTextComponents = {
         gallery: (props: GalleryProps): JSX.Element => {
             return (
                 <Gallery
+                    // @ts-ignore
                     images={props.value.images}
                     display={props.value.display}
+                    title={props.value.title || ''}
+                    description={props.value.description || ''}
                 />
             )
         },
