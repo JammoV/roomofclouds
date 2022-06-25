@@ -16,7 +16,7 @@ const Interieur: FC<{ post: Post }> = ({ post }) => {
     const { title = 'Missing title', body = [] } = post
 
     return (
-        <GenericTemplate containerWidth="lg">
+        <GenericTemplate>
             <Head>
                 <title>{`Room of Clouds - ${title}`}</title>
             </Head>
@@ -28,8 +28,6 @@ const Interieur: FC<{ post: Post }> = ({ post }) => {
                     <PortableText
                         value={body}
                         components={portableComponents}
-                        // imageOptions={{ w: 320, h: 240, fit: 'max' }}
-                        // {...client.config()}
                     />
                 </div>
             </article>
