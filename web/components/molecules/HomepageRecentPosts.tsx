@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import type { FC } from 'react'
 
 import type { Post } from '@/api/Types'
@@ -13,6 +14,13 @@ const HomepageRecentPosts: FC<HomepageRecentPostsProps> = ({ posts }) => (
         {posts.map((post) => {
             return <PostHero post={post} key={post._id} />
         })}
+        <div className="text-center">
+            <Link href={`/posts`}>
+                <a className="hover:cursor-pointer my-4 text-lg border-b-4 border-b-green-light hover:border-b-green-primary">
+                    Bekijk alle reisartikelen
+                </a>
+            </Link>
+        </div>
     </div>
 )
 

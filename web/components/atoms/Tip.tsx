@@ -24,7 +24,7 @@ const Tip: FC<TipProps> = ({ text, type }) => {
                     height={50}
                 />
             </div>
-            <div className={`text-lg ml-4 h-[40px]`}>{text}</div>
+            <div className={`text-lg ml-4 m-h-[40px]`}>{text}</div>
         </div>
     )
 }

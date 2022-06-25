@@ -3,12 +3,12 @@ import type { FC } from 'react'
 
 const menuItems = [
     {
-        label: 'Reisartikelen',
+        label: 'Reizen',
         path: '/posts',
         i: 1,
     },
     {
-        label: 'Interieurportfolio',
+        label: 'Interieur',
         path: '/interieur',
         i: 2,
     },

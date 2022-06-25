@@ -40,12 +40,14 @@ const Post: FC<{ post: Post }> = ({ post }) => {
                         // imageOptions={{ w: 320, h: 240, fit: 'max' }}
                         // {...client.config()}
                     />
-                    <button
-                        onClick={(): void => router.back()}
-                        className={`mt-4`}
-                    >
-                        Terug
-                    </button>
+                    <div className="text-center">
+                        <button
+                            onClick={(): void => router.back()}
+                            className={`hover:cursor-pointer mt-4 text-lg border-b-4 border-b-green-light hover:border-b-green-primary`}
+                        >
+                            Terug
+                        </button>
+                    </div>
                 </div>
             </article>
         </GenericTemplate>
